@@ -2,18 +2,29 @@ project:
   type: website
 
 website:
-  title: "BH_Secondary_Admissions_Analysis"
+  title: "Brighton and Hove Secondary Schools Admission Consultation"
   navbar:
+    background: primary
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - BH_sec_Sch_analysis.qmd
+    right:
+      - icon: person-circle
+        href: https://adamdennett.co.uk
+      - icon: twitter
+        href: https://twitter.com/adam_dennett
+      - icon: github
+        menu:
+          - text: Source Code
+            url:  https://github.com/adamdennett/BH_Secondary_Admissions_Analysis
+          - text: Report a Bug
+            url:  https://github.com/adamdennett/BH_Secondary_Admissions_Analysis/issues
+  repo-url: https://github.com/adamdennett/BH_Secondary_Admissions_Analysis
+  repo-actions: [source, issue]
 
 format:
   html:
-    theme: cosmo
+    theme: minty
     css: styles.css
     toc: true
 
 editor: visual
-

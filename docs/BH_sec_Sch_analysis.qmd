@@ -99,7 +99,6 @@ tmap_options(check.and.fix = TRUE)
 tm_shape(bh_catchments) +
   tm_borders() +
   tm_fill(alpha = 0.2, col = "AreaName") +
-  tm_layout(title = "Brighton and Hove Secondary School Catchment Areas",legend.position = c("left", "bottom")) +
 tm_shape(brighton_sec_schools) +
   tm_dots(col = "establishment_name", size = 0.1) +
   tm_layout(title = "Brighton and Hove Secondary Schools", legend.position = c("left", "bottom"))
@@ -273,6 +272,267 @@ Everything below is indicative - Brighton and Hove Council can do this calculati
 3.  The Brighton Aldridge Catchment has significantly more places available than demand would suggest.
 4.  **PAN reductions for Option 1 in 2026 appear to be applied without reference to likely demand.**
 5.  For Stringer/Varndean the reduction in places from 630 to 570 makes the demand ratio **EVEN WORSE**. Similar for Blatchington/Hove.
-6.  Nonsensically, catchments with low demand ratios already, (Patcham, Portslade, Brighton Aldridge) have **NO CHANGE** to their PANs in 2026. This makes no sense at all.
+6.  Nonsensically, catchments with low demand ratios already, (Patcham, Portslade, Brighton Aldridge) have **NO CHANGE** to their PANs in 2026.
 7.  Given current demand, it would make more sense to, at the very least, keep PANs steady for areas with already high demand and reduce PANs for areas with lower demand.
 8.  The current proposals to reduce PANs very much suggest a social engineering motivation (forcing high-demand catchments to reduce intake which would inevitably force students without places to seek education in other catchments, not over subscribed.
+
+# Option 2 and Travel Implications
+
+First we can set up where everyone lives in the city using the Output Area Geography
+
+```{r}
+brighton_oa <- st_read("data/oa_brighton.geojson")
+
+brighton_oa_points <- st_centroid(brighton_oa)
+
+tm_shape(brighton_oa_points) +
+  tm_dots()
+```
+
+Accessibility Analysis
+
+Next we need to get all of the roads in Brighton from Open Street Map
+
+```{r}
+data_path = "data/"
+# Check what files we have
+list.files(data_path)
+
+# Allow 10 GiB of memory
+rJava::.jinit()
+rJava::.jcall("java.lang.System", "S", "getProperty", "java.version")
+options(java.parameters = "-Xmx10G")
+
+library(osmextract)
+oe_match("East Sussex")
+
+roads_w_sussex = oe_get(c("West Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
+roads_e_sussex = oe_get(c("East Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
+names(roads_w_sussex)
+summary(roads_w_sussex)
+
+ht = c("motorway", "trunk", "primary", "secondary", "tertiary", "residential", "unclassified")
+osm_w_sussex_maj_roads = roads_w_sussex[roads_w_sussex$highway %in% ht, ]
+class(osm_w_sussex_maj_roads)
+osm_e_sussex_maj_roads = roads_e_sussex[roads_e_sussex$highway %in% ht, ]
+
+osm_sussex_maj_roads <- rbind(osm_w_sussex_maj_roads, osm_e_sussex_maj_roads) %>% st_transform(27700)
+summary(osm_sussex_maj_roads)
+summary(brighton_oa)
+
+#osm_roads_buffered <- st_buffer(osm_sussex_maj_roads, dist = 100)
+brighton_oa_buffer <- st_buffer(brighton_oa, dist = 500)
+brighton_blob <- st_union(brighton_oa_buffer)
+
+tm_shape(brighton_blob) +
+  tm_polygons(alpha = 0.5)
+
+brighton_roads <- st_intersection(osm_sussex_maj_roads, brighton_blob)
+
+tm_shape(brighton_roads) +
+  tm_lines()
+
+#going to need to write this out as a shapefile and then use JOSM to convert to a PBF file - https://josm.openstreetmap.de/ 
+#st_write(brighton_roads, "data/brighton_roads.shp", append=FALSE)
+
+```
+
+We can use the R5R package - https://ipeagit.github.io/r5r/ - to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by both walking and bus.
+
+```{r}
+
+# After allocating the memory import the r5r
+library(r5r)
+# Create the routable network by indicating the path where OSM, GTFS and possible DEM data are stored
+r5r_core = setup_r5(data_path = data_path)
+```
+
+```{r}
+
+#Fix the school and school data so r5 can handle it
+#schools first
+
+brighton_sec_schools <- read_csv("https://www.dropbox.com/scl/fi/fhzafgt27v30lmmuo084y/edubasealldata20241003.csv?rlkey=uorw43s44hnw5k9js3z0ksuuq&raw=1") %>% 
+  clean_names() %>% 
+  filter(la_name == "Brighton and Hove") %>% 
+  filter(phase_of_education_name == "Secondary") %>% 
+  filter(establishment_status_name == "Open") %>%
+  st_as_sf(., coords = c("easting", "northing")) %>% 
+  st_set_crs(27700) %>% 
+  st_transform(4326) %>% 
+  st_set_crs(4326)
+
+bh_sec_sch <- brighton_sec_schools %>% 
+  select(urn, establishment_name, geometry) %>%
+  rename(id = urn)
+
+coords <- st_coordinates(bh_sec_sch)
+bh_sec_sch$lon <- coords[, 1]
+bh_sec_sch$lat <- coords[, 2]
+
+summary(bh_sec_sch)
+
+#now the output areas
+brighton_oa_points_r5 <- brighton_oa_points %>% 
+  select(gid, oa21cd,lat, long) %>% 
+  rename(lon = long, lat = lat, id = gid) %>% 
+  st_transform(4326) %>% 
+  st_set_crs(4326)
+
+summary(brighton_oa_points_r5)
+
+```
+
+```{# {r}
+# #Set parameters
+# mode = c("WALK", "TRANSIT")
+# max_walk_time = 30 # minutes
+# max_trip_duration = 120 # minutes
+# departure_datetime = as.POSIXct("01-12-2023 8:30:00",
+#                                  format = "%d-%m-%Y %H:%M:%S")
+# 
+# # Calculate the travel time matrix by Transit
+# ttm = travel_time_matrix(r5r_core = r5r_core,
+#                           origins = bh_sec_sch,
+#                           destinations = brighton_oa_points_r5,
+#                           mode = mode,
+#                           departure_datetime = departure_datetime,
+#                           max_walk_time = max_walk_time,
+#                           max_trip_duration = max_trip_duration)
+# 
+# head(ttm)
+```
+
+```{# {r}
+# # Convert 'to_id' back to integer which is needed for the join
+# ttm[, to_id:=as.numeric(to_id)]
+# 
+# # Make inner join - the key in left is 'id' and in right 'to_id'
+# geo = inner_join(brighton_oa_points_r5, ttm, by=c(id = "to_id"))
+# head(geo)
+```
+
+```{# {r}
+# tm_shape(geo) + tm_symbols(col="travel_time_p50", size=0.5, border.lwd=0)
+```
+
+```{r}
+library(h3r)
+library(h3jsr)
+
+brighton_outline <- st_union(brighton_oa) %>% st_transform(4326)
+summary(brighton_oa)
+
+qtm(brighton_outline, fill = "white") +
+  qtm(brighton_oa_points_r5, size = 0.5, col = "red") +
+  qtm(bh_sec_sch, size = 0.5, col = "blue")
+
+brighton_h3 <- polygon_to_cells(brighton_oa, res = 11, simple = F)
+brighton_h3 <- cell_to_polygon(unlist(brighton_h3$h3_addresses), simple = FALSE)
+brighton_h3_centroids <- st_centroid(brighton_h3)
+
+qtm(brighton_h3, fill = "red", alpha = 0.5) 
+
+```
+
+```{r}
+brighton_h3_centroids <- mutate(brighton_h3_centroids, id = row_number())
+brighton_h3 <- mutate(brighton_h3, id = row_number())
+
+# Set parameters
+mode = c("WALK")
+max_walk_time = 90 # minutes
+max_trip_duration = 150 # minutes
+departure_datetime = as.POSIXct("01-12-2023 8:30:00",
+                                 format = "%d-%m-%Y %H:%M:%S")
+
+#note the code below already requires the h3 core matrix to be set up
+
+# Calculate the travel time matrix by Transit
+ttm_brighton_h3 = travel_time_matrix(r5r_core = r5r_core,
+                          origins = bh_sec_sch,
+                          destinations = brighton_h3_centroids,
+                          mode = mode,
+                          departure_datetime = departure_datetime,
+                          max_walk_time = max_walk_time,
+                          max_trip_duration = max_trip_duration)
+
+head(ttm_brighton_h3)
+nrow(ttm_brighton_h3)
+summary(ttm_brighton_h3)
+
+```
+
+```{r}
+#Now join travel time matrix back to H3 cells
+
+# Find out the travel time to closest school
+closest = aggregate(ttm_brighton_h3$travel_time_p50, by=list(ttm_brighton_h3$to_id), FUN=min, na.rm=TRUE)
+
+summary(closest)
+closest <- rename(closest, id = Group.1) 
+closest <- rename(closest, time = x)
+
+closest["id"] = as.integer(closest$id)
+head(closest)
+
+geo = inner_join(brighton_h3_centroids, closest, by="id")
+geo_hex = inner_join(brighton_h3, closest, by="id")
+head(geo)
+```
+
+```{r}
+tm_shape(geo) + 
+  tm_symbols(col="time", size=0.05, border.lwd=0, style="pretty", n=10, palette="RdYlBu", alpha = 0.3) + 
+  tm_layout(legend.title.size = 1.5) +
+tm_shape(bh_sec_sch) +
+  tm_dots(col = "black", border.lwd=0) + 
+tm_shape(brighton_outline) +
+  tm_polygons(alpha = 0) +
+  tm_layout(title = "Walk-Time (Minutes) to Secondary Schools",legend.position = c("left", "bottom"))
+  
+```
+
+```{r}
+# Set parameters
+mode = c("BUS")
+max_walk_time = 90 # minutes
+max_trip_duration = 150 # minutes
+departure_datetime = as.POSIXct("01-12-2023 8:30:00",
+                                 format = "%d-%m-%Y %H:%M:%S")
+
+#note the code below already requires the h3 core matrix to be set up
+
+# Calculate the travel time matrix by Transit
+ttm_brighton_h3 = travel_time_matrix(r5r_core = r5r_core,
+                          origins = bh_sec_sch,
+                          destinations = brighton_h3_centroids,
+                          mode = mode,
+                          departure_datetime = departure_datetime,
+                          max_walk_time = max_walk_time,
+                          max_trip_duration = max_trip_duration)
+
+# Find out the travel time to closest school
+closest = aggregate(ttm_brighton_h3$travel_time_p50, by=list(ttm_brighton_h3$to_id), FUN=min, na.rm=TRUE)
+
+closest <- rename(closest, id = Group.1) 
+closest <- rename(closest, time = x)
+
+closest["id"] = as.integer(closest$id)
+head(closest)
+
+geo = inner_join(brighton_h3_centroids, closest, by="id")
+geo_hex = inner_join(brighton_h3, closest, by="id")
+
+tm_shape(geo) + 
+  tm_symbols(col="time", size=0.05, border.lwd=0, style="pretty", n=10, palette="RdYlBu", alpha = 0.3) + 
+  tm_layout(legend.title.size = 1.5) +
+tm_shape(bh_sec_sch) +
+  tm_dots(col = "black", border.lwd=0) + 
+tm_shape(brighton_outline) +
+  tm_polygons(alpha = 0) +
+  tm_layout(title = "Bus Transit -Time (Minutes) to Secondary Schools",legend.position = c("left", "bottom"))
+```
+
+```{r}
+```

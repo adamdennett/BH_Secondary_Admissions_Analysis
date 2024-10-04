@@ -6,15 +6,23 @@ format: html
 editor: visual
 ---
 
+*All analysis code and data in this report are available via the github links on this site*
+
+*All data used in the analysis can be downloaded from [here](https://www.dropbox.com/s/iovcingsa53ac9m/data.zip?dl=0)*
+
+*The analysis below goes into quite a lot of detail, but my main observations are summarised in the executive summary below if you don't want to read to the end.*
+
+*Please email me on the above address if you have any questions and queries.*
+
 # Executive Summary
 
 -   Members of the Brighton and Hove Community have been invited to respond to proposals from Brighton and Hove City Council to change the Secondary School admissions arrangements in the city - <https://yourvoice.brighton-hove.gov.uk/en-GB/projects/secondary-school-engagement-exercise/1>
 
--   Information provided is not enough for parents, pupils, schools and any other interested parties to make an informed decision, in particular:
+-   The information provided is not enough for parents, pupils, schools and any other interested parties to make an informed decision, in particular:
 
     -   There is a lack of information about the spatial distribution of the projected decline in the secondary school cohort across the city. High level figures mask important local variation within the city and the council fail to provide information about how current and projected local demand maps on to proposals to reduce intake levels in different schools under the different options presented.
 
-    -   No information about the environmental (traffic and travel) and pupil well-being implications of the proposals in Option 2, which would be highly likely to result in significant numbers of children having to travel long distances across the city to attend schools.
+    -   No information about the environmental (traffic and travel) and pupil well-being implications of the proposals in Option B, which would be highly likely to result in significant numbers of children having to travel long distances across the city to attend schools.
 
     -   No sound justification for a privileging of the desire to smooth the distributions of pupils in receipt of Free School Meals (FSM) across schools in the city, over and above any other reasonable considerations which will impact the well-being of all children. A balanced assessment would need to consider the physical and mental benefits of being able to walk to school, the social and cultural benefits of attending school near where friends, family and local community activities are located. There is no acknowledgement of why schools in cities like London, many of whom have far higher FSM levels than any school in Brighton, are able to achieve better pupil outcomes.
 
@@ -26,7 +34,7 @@ editor: visual
 
     -   Current proposals (under options 1 and 3 in particular) to reduce intakes in particular schools ignores different levels of demand (actual pupil numbers in current catchments) in different parts of the city, potentially leading to the cutting of places in schools in catchments where demand will remain high and the retention of overly large intake sizes in schools in the city where demographic demand is likely to remain low.
 
-    -   Proposals under Option 2 would lead to excessive numbers of children needed to attend schools a long way from their homes, impacting their well-being and contributing unjustifiably to increased volumes of traffic across the city where many will choose to drive, adding to the costs of Brighton Council where free transport (bus) options will need to be provided, and reducing the capacity on the bus network at key times of day as pupils will need to use buses to get to and from school.
+    -   Proposals under Option B would lead to excessive numbers of children needed to attend schools a long way from their homes, impacting their well-being and contributing unjustifiably to increased volumes of traffic across the city where many will choose to drive, adding to the costs of Brighton Council where free transport (bus) options will need to be provided, and reducing the capacity on the bus network at key times of day as pupils will need to use buses to get to and from school.
 
 -   Brighton and Hove Council need to provide the following in support of their proposals in order for people to respond to the consultation in a constructive way:
 
@@ -36,7 +44,7 @@ editor: visual
 
         -   Data on spatially disaggregated (as above) pupil projections and the methodology for these projections is necessary to assess the validity of plans going forward.
 
-    -   An assessment of the likely impact on traffic and travel for the different option scenarios, but in particularly for option 2 where serious negative impacts on both are highly likely.
+    -   An assessment of the likely impact on traffic and travel for the different option scenarios, but in particularly for Option B where serious negative impacts on both are highly likely.
 
     -   A full justification for the privileging of FSM proportions across schools as the desired outcome over and above, for example, active travel mental and physical health benefits for pupils attending schools close to their home.
 
@@ -44,11 +52,11 @@ editor: visual
 
 -   Of the proposals on the table, it's my personal view that:
 
-    -   Option 1 provides the nearest to the current situation and arguably the most justifiable solution, however, the reductions in PAN across different schools in the city needs revising in the light of likely demand.
+    -   Option A provides the nearest to the current situation and arguably the most justifiable solution, however, the reductions in PAN across different schools in the city needs revising in the light of likely demand.
 
-    -   Option 2 is a terrible solution which could lead to pupils attending schools a long way from their homes; 'choice' becomes an illusion where there is an imbalance in perceived school quality and huge geographic distances between schools in the same catchment. I would strongly advocate against this solution
+    -   Option B is a terrible solution which could lead to pupils attending schools a long way from their homes; 'choice' becomes an illusion where there is an imbalance in perceived school quality and huge geographic distances between schools in the same catchment. I would strongly advocate against this solution
 
-    -   Option 3, like option 1, needs to be more carefully justified in relation to PAN reduction distribution across schools. I currently view it as a worse option than 1 as no choice is available.
+    -   Option C, like Option A, needs to be more carefully justified in relation to PAN reduction distribution across schools. I currently view it as a worse option than 1 as no choice is available.
 
 # Context
 
@@ -68,7 +76,7 @@ At secondary school level, catchment zones are the only thing that really matter
 
 Brighton and Hove doesn't publish spatial data of the catchment zones, so I had to do my best to trace the boundaries manually.
 
-Fortunately, the Goverment publishes good data on all schools in England and Wales here:
+Fortunately, the Government publishes good data on all schools in England and Wales here:
 
 <https://get-information-schools.service.gov.uk/Downloads>
 
@@ -262,7 +270,7 @@ In the table above there are a few things to note:
 
     2.  A Demand Ratio below 1 indicates there are likely more places available than pupils likely wanting a place in that catchment
 
-4.  As well as current suggested PANs, I include PANs proposed in 2026 under the Option 1 scenario published.
+4.  As well as current suggested PANs, I include PANs proposed in 2026 under the Option A scenario published.
 
 ## Observations on Pupil Admission Number Reduction Proposals
 
@@ -271,28 +279,17 @@ Everything below is indicative - Brighton and Hove Council can do this calculati
 1.  The Hove Park / Blatchington Mill and Varndean / Dorothy Stringer Catchments currently appear to have more projected demand than places available. The Blatchington/Hove ratio should be taken with a bit of a pinch of salt as this catchment also includes the Cardinal Newman Catholic School (which, accepted, takes students from across the city) and the King's Free School. The final row in the table includes these two schools in the catchment and we can see a noticable improvement to the projected demand ratio. We can probably expect the real demand ratio to be somewhere between the two.
 2.  The Longhill, Portslade and Patcham catchments appear to have broadly appropriate demand ratios
 3.  The Brighton Aldridge Catchment has significantly more places available than demand would suggest.
-4.  **PAN reductions for Option 1 in 2026 appear to be applied without reference to likely demand.**
+4.  **PAN reductions for Option A in 2026 appear to be applied without reference to likely demand.**
 5.  For Stringer/Varndean the reduction in places from 630 to 570 makes the demand ratio **EVEN WORSE**. Similar for Blatchington/Hove.
 6.  Nonsensically, catchments with low demand ratios already, (Patcham, Portslade, Brighton Aldridge) have **NO CHANGE** to their PANs in 2026.
 7.  Given current demand, it would make more sense to, at the very least, keep PANs steady for areas with already high demand and reduce PANs for areas with lower demand.
 8.  The current proposals to reduce PANs very much suggest a social engineering motivation (forcing high-demand catchments to reduce intake which would inevitably force students without places to seek education in other catchments, not over subscribed.
 
-# Option 2 and Travel Implications
+# Option B and Travel Implications
 
 ## Accessibility Analysis
 
-First we can set up where everyone lives in the city using the Output Area Geography
-
-```{r, warning=FALSE, message=FALSE, echo=FALSE}
-brighton_oa <- st_read(here("data","oa_brighton.geojson"))
-
-brighton_oa_points <- st_centroid(brighton_oa)
-
-tm_shape(brighton_oa_points) +
-  tm_dots()
-```
-
-Next we need to get all of the roads in Brighton from Open Street Map
+To carry out an accessibility analysis, information on the full road network in Brighton and Hove is required. This can be obtained from Open Street Map
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 data_path = here("data")
@@ -314,6 +311,8 @@ library(h3jsr)
 library(h3r)
 library(dplyr)
 library(osmextract)
+
+brighton_oa <- st_read(here("data","oa_brighton.geojson"))
 
 oe_match("East Sussex")
 roads_w_sussex = oe_get(c("West Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
@@ -349,7 +348,7 @@ tm_shape(brighton_roads) +
 
 ## 
 
-We can use the R5R package - <https://ipeagit.github.io/r5r/> - to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by both walking and bus.
+The R5R package - <https://ipeagit.github.io/r5r/> - can be used to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by car, foot and bus.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Create the routable network by indicating the path where OSM, GTFS and possible DEM data are stored
@@ -382,11 +381,11 @@ bh_sec_sch$lat <- coords[, 2]
 #summary(bh_sec_sch)
 
 #now the output areas
-brighton_oa_points_r5 <- brighton_oa_points %>% 
-  select(gid, oa21cd,lat, long) %>% 
-  rename(lon = long, lat = lat, id = gid) %>% 
-  st_transform(4326) %>% 
-  st_set_crs(4326)
+#brighton_oa_points_r5 <- brighton_oa_points %>% 
+#  select(gid, oa21cd,lat, long) %>% 
+#  rename(lon = long, lat = lat, id = gid) %>% 
+#  st_transform(4326) %>% 
+#  st_set_crs(4326)
 
 #summary(brighton_oa_points_r5)
 
@@ -481,7 +480,7 @@ R5R takes GTFS data available from https://mobilitydatabase.org/ and uses detail
 
 However, Zooming in to Longhill High School in Rottingdean can calulating bus accessibility from the School, we can see that after taking wait-times into consideration, it might take at least 30 minutes to access even the A259 in Rottingdean, let alone access the City Centre.
 
-Given that under option 2, there is a high probability that singificant numbers of pupils from Central Brighton would be forced to attend Longhill, this is a significant issue.
+Given that under Option B, there is a high probability that singificant numbers of pupils from Central Brighton would be forced to attend Longhill, this is a significant issue.
 
 When we look at the Car travel times in the map below that, it becomes clear what options most might be forced into taking.
 
@@ -573,8 +572,26 @@ rJava::.jgc(R.gc = TRUE)
 
 # Preliminary Conclusions
 
-1.  It is undeniable Brighton and Hove faces challenges of a declining school roll which put pressures on
+1.  It is undeniable Brighton and Hove faces challenges of a declining school roll which are going to place pressures on the provision of school resources into the future and while I am pleased to see a consultation being opened with options put forward, it's disappointing to see the lack of accompanying evidence to support the responses to the proposal that residents in the city are being asked to make.
 
-2.  The proposals to reduce PANs in schools across the city appear to be based on a desire to reduce the number of places in schools in areas of the city where demand is already high relative to the number of places available. This is a social engineering approach which will likely lead to children being forced to travel across the city to attend schools in catchments where demand is lower relative to the number of places available. This is likely to lead to increased traffic congestion and pollution across the city, as well as increased costs to the council in providing free bus transport to children who will be forced to travel long distances to school.
+2.  In this short piece of work I have sought to contribute, a little, to the evidence base by providing some spatial analysis of where current and future secondary school pupils are located in the city and how this relates to the proposed changes in Pupil Admission Numbers (PANs) across schools and catchments. The evidence suggests that the proposed changes to PANs do not pay enough attention to likely demand for places in different parts of the city with larger reductions for Schools in places where demand is likely to be high and smaller reductions for places where it is already low - the opposite of what most would expect. The council need to be open about their own analysis and whether they have considered this evidence in their proposals. They will have much better (more detailed and up to date) data than I have been able to access and should be able to provide ample evidence of spatially disaggregated demand for secondary school places in the City. It is clear to me that either a much strong argument needs to be put forward for why Pupil Admission Numbers are being reduced in parts of the city which greatest demand relative to the number of places available, or the proposed reductions need to be rethought in the light of this new evidence.
 
-3.  
+3.  I have also provided some preliminary analysis of the likely travel implications of the proposed changes in Option B. This option would be disastrous for many pupils in the city, particularly those falling into the proposed "South Brighton" catchment and living in the centre of Brighton who may would be forced to travel long distances to Longhill High School in Rottingdean. Given the relative performance of Dorothy Stringer and Longhill, it is plausible that the former would be heavily over-subscribed, with the latter under-subscribed and with much reduced Pupil Admission Numbers at Dorothy Stringer exacerbating the problem further. While more work needs to be carried out to look at traffic and travel implications fully, my preliminary analysis proves that active travel would not be an option for any pupils forced to access education over the other side of the city. This would inevitably lead to increased traffic congestion and pollution across the city as people are forced into their cars, as well as incrasing costs for the council who have a saturtory obligation to provide transport for pupils who can't attend their nearest school.
+
+4.  Under the current Brighton and Hove secondary school admissions guidelines, pupils in receipt of free school meals outside of a catchment already get priority over students within it, should they wish to attend a school in that area, but clearly not many do. The council has clearly put the evening out of FSM proportions at the top of its list of priorities, and while there is some evidence that diverse schools have better outcomes, fixating on artificially engineering FSM proportions through PAN reductions in more popular schools will not be a silver bullet to achieving the stated social goals of the council. Schools are an important part of a much wider city ecosystem that has many co-dependencies and the social and environmental implications of moving lots of people around the city as well as moving them away from their local communities should not be underestimated, particularly as we strive towards a more sustainable future and better health outcomes for the population in general. Active travel should be encourage and this is only really feasible where travel to school is relatively short.
+
+# Recommendations
+
+-   As a bare minimum, the council should make available at least at the LSOA (neighbourhood), but perferably even Output Area Level, the spatial distribution of current and future secondary school pupils in the city by age. This data is likely to be available from the Schools Census and the Councils own records and should be used to inform the proposed changes to PANs in the city.
+
+-   Spatial data for the current and each of the new proposed catchment scenarios needs to be made publically available. If not spatial data, then a list of postcodes or output which fall within each catchment area will allow for independent analysis of the proposals to be carried out.
+
+-   The council should carry out a full accessibility analysis of the proposed changes in Option B, including the likely traffic implications of the proposed changes. This should be made publically available and should be used to inform the consultation process.
+
+-   Data on spatially disaggregated (as above) pupil projections and the methodology for these projections is necessary to assess the validity of plans going forward.
+
+-   An assessment of the likely impact on traffic and travel for the different option scenarios, but in particularly for Option B where serious negative impacts on both are highly likely.
+
+-   A full justification for the privileging of FSM proportions across schools as the desired outcome over and above, for example, active travel mental and physical health benefits for pupils attending schools close to their home.
+
+-   An assessment of why schools in cities like London achieve much better pupil attainment outcomes where FSM proportions are much higher than in Brighton and Hove and what these implications might be for improving the outcomes across all schools in the city.

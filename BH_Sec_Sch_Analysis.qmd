@@ -1,0 +1,159 @@
+---
+title: "Brighton and Hove Secondary School Admissions Proposal Analysis"
+author: "Professor Adam Dennett, Bartlett Centre for Advanced Spatial Analysis, UCL"
+format: html
+editor: visual
+---
+
+Here I'm going to write a few thoughts and observations about the newly proposed Brighton and Hove Secondary School Admissions Policy and proposed changes to the school catchment areas.
+
+Will try to do the best I can with the data and information available, but as I see it, there are issues with various elements of the different proposal options - to a greater or lesser degree.
+
+Some of the background information is taken from work one of my students, Josiah Tan, completed last year as part of his MSc dissertation.
+
+All current information on the proposed reforms is available from here:
+
+<https://yourvoice.brighton-hove.gov.uk/en-GB/projects/secondary-school-engagement-exercise/1>
+
+## Current Situation
+
+### Present Catchments and School Locations
+
+Brighton and Hove doesn't publish spatial data of the catchment zones, so I had to do my best to trace the boundaries manually.
+
+Get the location of and info about schools here:
+
+https://get-information-schools.service.gov.uk/Downloads
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)
+library(sf)
+library(tmap)
+library(janitor)
+
+#no option to read directly from web so unzipped it and downloading from here:
+
+brighton_sec_schools <- read_csv("https://www.dropbox.com/scl/fi/fhzafgt27v30lmmuo084y/edubasealldata20241003.csv?rlkey=uorw43s44hnw5k9js3z0ksuuq&raw=1") %>% 
+  clean_names() %>% 
+  filter(la_name == "Brighton and Hove") %>% 
+  filter(phase_of_education_name == "Secondary") %>% 
+  filter(establishment_status_name == "Open") %>%
+  st_as_sf(., coords = c("easting", "northing")) %>% 
+  st_set_crs(27700)
+
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE, error=FALSE}
+
+bh_catchments <- st_read("data/BrightonSecondaryCatchments.geojson")
+
+tmap_mode("view")
+tmap_options(check.and.fix = TRUE)
+tm_shape(bh_catchments) +
+  tm_borders() +
+  tm_fill(alpha = 0.2, col = "AreaName") +
+  tm_layout(title = "Brighton and Hove Secondary School Catchment Areas",legend.position = c("left", "bottom")) +
+tm_shape(brighton_sec_schools) +
+  tm_dots(col = "establishment_name", size = 0.1) +
+  tm_layout(title = "Brighton and Hove Secondary Schools", legend.position = c("left", "bottom"))
+
+```
+
+### Context - Background to Secondary School Admissions in Brighton
+
+Before the last Brighton school admissions reform was announced in 2007, Brighton’s admissions criteria were similar to most English Local Authorities (LAs). Parents expressed their preferences for any state school and schools admitted students until their published capacity was reached. Schools and students were then matched using a priority-matching mechanism which considered only the first choice, then using over-subscription criteria to rank and allocate remaining students where necessary (Allen et al., 2013).
+
+Under the UK national School Admissions Code, 2007, distance between home and school is cited as a ‘clear and objective criterion’ for over-subscription that ensures students do not have overly long journeys to and from the school (School Admissions Code, 2007) – and indeed is used as the primary tie-breaker in many local authorities. Where distance may advantage those living near better schools, a range of other suitable decision criteria are listed – including random (lottery) allocation.
+
+Brighton’s authorities have long cited the issue of fair access to popular secondary schools (Eastwood & Turvey, 2008) and consequently, in 2008, introduced a lottery system, alongside new catchment areas to its secondary school admissions process (distance was retained as a criteria for primary schools).
+
+Places at schools are decided using the following published criteria: https://www.brighton-hove.gov.uk/schools-and-learning/apply-school/how-community-secondary-school-places-will-be-decided-2025-2026
+
+1.  Looked after children and all previously looked after children
+2.  Children who have a medical or social need
+3.  Children who have a sibling link and live in the catchment area
+4.  Children eligible for Free School Meals and living in the catchment area
+5.  Other children eligible for free school meals up to the city average
+6.  Children who live in the catchment area
+7.  Other children who apply
+8.  Tie-break (lottery)
+
+It should also be noted that Church voluntary aided, academy and free schools use their own rules to decide which children get offered a school place first - this has particular relevance in some catchment areas, particularly the Blatchington Mill and Hove Park catchment area where Cardinal Newman (Catholic) and the King'S School (Free) are located.
+
+## Objectives of the Proposed Admissions Changes
+
+In the supplied PowerPoint file, the council has stated that the objectives of the proposed changes are to:
+
+1.  Respond to the issue of falling pupil numbers. Ensuring that available places aligns closer with pupil numbers – in turn assisting with budget sustainability.
+2.  Maintaining the geographic spread of secondary schools in the city. Losing a school in the West, North, or East of the city would be a strategic mistake (future growth in population).
+3.  Aspiration for all secondary schools to be good or outstanding in all Ofsted areas. Currently, BACA and Longhill are rated ‘Requires Improvement’.
+4.  The Council has not yet improved educational outcomes of FSM pupils as much as it would have liked.
+
+### Issues with the evidence-base for these objectives
+
+While these objectives are laudible, the lack of spatial literacy in these proposals and the skating over of the demand dimension (where pupils actually live in the City) is concerning and needs addressing.
+
+The council has not provided any spatial analysis of where the current and future secondary school pupil populations are located. This is a major oversight, as cutting places from schools in areas of the city where demand is higher relative to the availability of places will lead to, potentially, places being cut from the wrong schools and excessive and necessary travel for students unable to attend their local schools and forced to travel across the city to where places do exist.
+
+Some preliminary analysis below suggests that the way Pupil Admission Numbers (PANs) are proposed to be cut from schools across the city, ignores WHERE students are located, potentially storing up problems.
+
+## Spatial Distribution of Secondary School Pupils in Brighton and Hove
+
+Brighton and Hove council will have detailed data on where current primary school pupils in the City live. This data is not publicly available as far as I can tell and I have not had time to fill out access requests to access the Schools Census - https://www.gov.uk/guidance/complete-the-school-census/data-items-2024-to-2025 - which could be used to confirm where students attending primary schools in the city currently live.
+
+However, I have been able to obtain some data on the spatial distribution of young people from the 2021 Census:
+
+https://www.nomisweb.co.uk/sources/census_2021
+
+From here I downloaded at the Lower Layer Super Output Area (LSOA - roughly neighbourhood) level, data for all people and those aged 5-9 and 10-15 in 2021.
+
+Those who were 5 in 2021 will be 8 now and 10 in 2026 when the proposed changes are due to come into effect. Those who were 10 in 2021 will be 13 now and 16 in 2026, so I will focus on the 5-9 year olds.
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+#get some LSOA boundaries for E&W from ONS
+#url <- "https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/Lower_layer_Super_Output_Areas_December_2021_Boundaries_EW_BFC_V10/FeatureServer/0/query?outFields=*&where=1%3D1&f=geojson"
+
+# Read the GeoJSON file into an sf object
+#sf_data <- st_read(url)
+#save locally
+#st_write(sf_data, "data/EW_LSOA.geojson")
+sf_data <- st_read("data/EW_LSOA.geojson")
+sf_data <- clean_names(sf_data)
+
+brighton_school_children <- read_csv("data/BrightonLSOASchoolChildren.csv")
+
+brighton_lsoa <- sf_data %>% right_join(brighton_school_children, by = c("lsoa21cd" = "lsoa_code"))
+
+st_write(brighton_lsoa, "BrightonLSOASchoolChildren.geojson", append=FALSE)
+
+#summary(brighton_lsoa)
+
+tmap_mode("view")
+tm_shape(brighton_lsoa) +
+  tm_polygons("lq_5_9", alpha = 0.5, style = "jenks", palette = "RdBu", title = "Location Quotient 5-9 year olds")
+```
+
+The map above shows the location quotient of 5-9 year olds in Brighton and Hove. This is a measure of the concentration of young people in each LSOA relative to the city average. A value of 1 means the same as the city average, above 1 means more than average, below 1 means less than average.
+
+You can see that very few people due to go into secondary school in 2026 live in the city centre, with the highest concentrations in the outer northern, western and eastern areas of the city.
+
+## How do the distributions of pupils due to go into secondary school in 2026 compare with published current and intended Pupil Admission Numbers?
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+# Calculate centroids of brighton_lsoa
+brighton_lsoa_centroids <- st_centroid(brighton_lsoa) %>% 
+  st_transform(27700)
+
+# Perform the spatial join
+joined_data <- st_join(bh_catchments, brighton_lsoa_centroids, join = st_intersects)
+
+# Sum numeric fields for each polygon in bh_catchments
+aggregated_data <- joined_data %>%
+  group_by(AreaName) %>%  # Replace with the actual ID column of bh_catchments
+  summarise(across(where(is.numeric), \(x) sum(x, na.rm = TRUE)))
+
+# now just keep the totoals
+new_dataframe <- aggregated_data %>%
+  select(AreaName, `5_9_total`)
+
+```

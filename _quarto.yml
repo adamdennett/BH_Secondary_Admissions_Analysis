@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Brighton and Hove Secondary Schools Admission Consultation"

@@ -394,17 +394,17 @@ summary(brighton_oa_points_r5)
 ```{r}
 #visualise the spatial data
 brighton_outline <- st_union(brighton_oa) %>% st_transform(4326)
-summary(brighton_oa)
+#summary(brighton_oa)
 
-qtm(brighton_outline, fill = "white") +
-  qtm(brighton_oa_points_r5, size = 0.5, col = "red") +
-  qtm(bh_sec_sch, size = 0.5, col = "blue")
+# qtm(brighton_outline, fill = "white") +
+#   qtm(brighton_oa_points_r5, size = 0.5, col = "red") +
+#   qtm(bh_sec_sch, size = 0.5, col = "blue")
 
 brighton_h3 <- polygon_to_cells(brighton_oa, res = 11, simple = F)
 brighton_h3 <- cell_to_polygon(unlist(brighton_h3$h3_addresses), simple = FALSE)
 brighton_h3_centroids <- st_centroid(brighton_h3)
 
-qtm(brighton_h3, fill = "red", alpha = 0.5) 
+#qtm(brighton_h3, fill = "red", alpha = 0.5) 
 
 ```
 
@@ -414,7 +414,7 @@ brighton_h3_centroids <- mutate(brighton_h3_centroids, id = row_number())
 brighton_h3 <- mutate(brighton_h3, id = row_number())
 
 # Set parameters
-mode = c("TRANSIT")
+mode = c("WALK")
 max_walk_time = 90 # minutes
 max_trip_duration = 150 # minutes
 departure_datetime = as.POSIXct("23-05-2024 8:30:00",
@@ -430,10 +430,6 @@ ttm_brighton_h3 = travel_time_matrix(r5r_core = r5r_core,
                           departure_datetime = departure_datetime,
                           max_walk_time = max_walk_time,
                           max_trip_duration = max_trip_duration)
-
-head(ttm_brighton_h3)
-nrow(ttm_brighton_h3)
-summary(ttm_brighton_h3)
 
 ```
 
@@ -467,22 +463,8 @@ tm_shape(brighton_outline) +
 ```
 
 ```{r}
-access1 <- r5r::accessibility(r5r_core,
-                        origins = points,
-                        destinations = points,
-                        mode = mode,
-                        opportunities_colnames = c("schools", "healthcare"),
-                        decay_function = "step",
-                        cutoffs = travel_time_cutoff,
-                        departure_datetime = departure_datetime,
-                        max_walk_time = max_walk_time,
-                        time_window = time_window,
-                        progress = FALSE)
-```
-
-```{r}
 # Set parameters
-mode = c("WALK")
+mode = c("TRANSIT")
 max_walk_time = 90 # minutes
 max_trip_duration = 150 # minutes
 departure_datetime = as.POSIXct("01-12-2023 8:30:00",
@@ -512,7 +494,7 @@ geo = inner_join(brighton_h3_centroids, closest, by="id")
 geo_hex = inner_join(brighton_h3, closest, by="id")
 
 tm_shape(geo) + 
-  tm_symbols(col="time", size=0.05, border.lwd=0, style="pretty", n=10, palette="RdYlBu", alpha = 0.3) + 
+  tm_symbols(col="time", size=0.05, border.lwd=0, style="pretty", n=10, palette="-magma", alpha = 0.3) + 
   tm_layout(legend.title.size = 1.5) +
 tm_shape(bh_sec_sch) +
   tm_dots(col = "black", border.lwd=0) + 

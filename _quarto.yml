@@ -11,7 +11,7 @@ website:
     right:
       - icon: person-circle
         href: https://adamdennett.co.uk
-      - icon: twitter-x
+      - icon: twitter
         href: https://twitter.com/adam_dennett
       - icon: github
         menu:

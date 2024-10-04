@@ -77,6 +77,7 @@ library(tidyverse)
 library(sf)
 library(tmap)
 library(janitor)
+library(here)
 
 #no option to read directly from web so unzipped it and downloading from here:
 
@@ -92,7 +93,7 @@ brighton_sec_schools <- read_csv("https://www.dropbox.com/scl/fi/fhzafgt27v30lmm
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE, error=FALSE}
 
-bh_catchments <- st_read("data/BrightonSecondaryCatchments.geojson")
+bh_catchments <- st_read(here("data","BrightonSecondaryCatchments.geojson"))
 
 tmap_mode("view")
 tmap_options(check.and.fix = TRUE)
@@ -167,14 +168,14 @@ Those who were 5 in 2021 will be 8 now and 10 in 2026 when the proposed changes 
 #sf_data <- st_read(url)
 #save locally
 #st_write(sf_data, "data/EW_LSOA.geojson")
-sf_data <- st_read("data/EW_LSOA.geojson")
+sf_data <- st_read(here("data","EW_LSOA.geojson"))
 sf_data <- clean_names(sf_data)
 
-brighton_school_children <- read_csv("data/BrightonLSOASchoolChildren.csv")
+brighton_school_children <- read_csv(here("data", "BrightonLSOASchoolChildren.csv"))
 
 brighton_lsoa <- sf_data %>% right_join(brighton_school_children, by = c("lsoa21cd" = "lsoa_code"))
 
-st_write(brighton_lsoa, "BrightonLSOASchoolChildren.geojson", append=FALSE)
+st_write(brighton_lsoa,here("data","BrightonLSOASchoolChildren.geojson"), append=FALSE)
 
 #summary(brighton_lsoa)
 
@@ -229,7 +230,7 @@ Taking the numbers of 5-9 year olds above, we can estimate the numbers of pupils
 To do this, I have taken the single year of age proportions from the 2021 Census and used them to disaggregate the 5-9 age group into single years of age. 5-year olds are the key group as these will be 10 and about to go to secondary school in 2026.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-pyramid <- read_csv("data/BrightonPopPyramid.csv")
+pyramid <- read_csv(here("data","BrightonPopPyramid.csv"))
 
 ggplot(pyramid, aes(x = Count, 
                     y = factor(Age),
@@ -243,7 +244,7 @@ ggplot(pyramid, aes(x = Count,
 ### Comparing populations of 2021 5-year-olds with available school places in 2026.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-table_catchment <- read_csv("data/BHCatchmentPupilEstimates.csv") 
+table_catchment <- read_csv(here("data","BHCatchmentPupilEstimates.csv")) 
 
 table_catchment_print <- kable(table_catchment, caption = "Secondary School Demand in 2026 By Current Catchment Zones")
 table_catchment_print
@@ -278,10 +279,12 @@ Everything below is indicative - Brighton and Hove Council can do this calculati
 
 # Option 2 and Travel Implications
 
+## Accessibility Analysis
+
 First we can set up where everyone lives in the city using the Output Area Geography
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-brighton_oa <- st_read("data/oa_brighton.geojson")
+brighton_oa <- st_read(here("data","oa_brighton.geojson"))
 
 brighton_oa_points <- st_centroid(brighton_oa)
 
@@ -289,14 +292,12 @@ tm_shape(brighton_oa_points) +
   tm_dots()
 ```
 
-Accessibility Analysis
-
 Next we need to get all of the roads in Brighton from Open Street Map
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
-data_path = "data/"
+data_path = here("data")
 # Check what files we have
-list.files(data_path)
+#list.files(data_path)
 
 # Allow 10 GiB of memory
 rJava::.jinit()
@@ -315,7 +316,6 @@ library(dplyr)
 library(osmextract)
 
 oe_match("East Sussex")
-
 roads_w_sussex = oe_get(c("West Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
 roads_e_sussex = oe_get(c("East Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
 names(roads_w_sussex)
@@ -349,7 +349,7 @@ tm_shape(brighton_roads) +
 
 ## 
 
-We can use the R5R package - https://ipeagit.github.io/r5r/ - to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by both walking and bus.
+We can use the R5R package - <https://ipeagit.github.io/r5r/> - to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by both walking and bus.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Create the routable network by indicating the path where OSM, GTFS and possible DEM data are stored
@@ -418,8 +418,9 @@ brighton_h3 <- mutate(brighton_h3, id = row_number())
 mode = c("WALK")
 max_walk_time = 90 # minutes
 max_trip_duration = 150 # minutes
-departure_datetime = as.POSIXct("23-05-2024 8:30:00",
-                                 format = "%d-%m-%Y %H:%M:%S")
+departure_datetime = as.POSIXct("23-05-2024 8:30:00", 
+                                format = "%d-%m-%Y %H:%M:%S", 
+                                tz = "GMT")
 
 #note the code below already requires the h3 core matrix to be set up
 
@@ -455,7 +456,7 @@ geo_hex = inner_join(brighton_h3, closest, by="id")
 
 The map below shows the walking travel times to the nearest secondary school in Brighton and Hove from each school. The travel times are calculated using the R5R package and are based on people walking along the Open Street Map road network.
 
-Notably, we can see that at present, most children in most catchments can reasonably be expected to walk to their nearest secondary school in under 1hr. The exceptions are those who live in Whitehawk and Bevendean in the East of the City - areas which are persistently ranked as the most deprived in the city. 
+Notably, we can see that at present, most children in most catchments can reasonably be expected to walk to their nearest secondary school in under 1hr. The exceptions are those who live in Whitehawk and Bevendean in the East of the City - areas which are persistently ranked as the most deprived in the city.
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}
 tm_shape(geo) + 
@@ -469,7 +470,7 @@ tm_shape(bh_catchments) +
   
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 bh_sec_sch1 <- bh_sec_sch %>% 
   filter(id == "114581")
 ```
@@ -478,19 +479,20 @@ More analysis and validation of these preliminary results is required and indeed
 
 R5R takes GTFS data available from https://mobilitydatabase.org/ and uses detailed timetable information to generate these estimate, however, more work is needed to be confident of the patterns observed.
 
-However, Zooming in to Longhill High School in Rottingdean can calulating bus accessibility from the School, we can see that after taking wait-times into consideration, it might take at least 30 minutes to access even the A259 in Rottingdean, let alone access the City Centre. 
+However, Zooming in to Longhill High School in Rottingdean can calulating bus accessibility from the School, we can see that after taking wait-times into consideration, it might take at least 30 minutes to access even the A259 in Rottingdean, let alone access the City Centre.
 
 Given that under option 2, there is a high probability that singificant numbers of pupils from Central Brighton would be forced to attend Longhill, this is a significant issue.
 
-When we look at the Car travel times in the map below that, it becomes clear what options most might be forced into taking. 
+When we look at the Car travel times in the map below that, it becomes clear what options most might be forced into taking.
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Set parameters
 mode = c("BUS")
 max_walk_time = 30 # minutes
 max_trip_duration = 60 # minutes
 departure_datetime = as.POSIXct("23-05-2024 8:30:00",
-                                 format = "%d-%m-%Y %H:%M:%S")
+                                 format = "%d-%m-%Y %H:%M:%S", 
+                                tz = "GMT")
 
 #note the code below already requires the h3 core matrix to be set up
 
@@ -564,9 +566,15 @@ tm_shape(bh_catchments) +
   tm_layout(title = "Car Travel Time",legend.position = c("left", "bottom"))
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 r5r::stop_r5(r5r_core)
 rJava::.jgc(R.gc = TRUE)
 ```
 
+# Preliminary Conclusions
 
+1.  It is undeniable Brighton and Hove faces challenges of a declining school roll which put pressures on
+
+2.  The proposals to reduce PANs in schools across the city appear to be based on a desire to reduce the number of places in schools in areas of the city where demand is already high relative to the number of places available. This is a social engineering approach which will likely lead to children being forced to travel across the city to attend schools in catchments where demand is lower relative to the number of places available. This is likely to lead to increased traffic congestion and pollution across the city, as well as increased costs to the council in providing free bus transport to children who will be forced to travel long distances to school.
+
+3.  

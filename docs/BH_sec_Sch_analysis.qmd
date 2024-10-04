@@ -280,7 +280,7 @@ Everything below is indicative - Brighton and Hove Council can do this calculati
 
 First we can set up where everyone lives in the city using the Output Area Geography
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 brighton_oa <- st_read("data/oa_brighton.geojson")
 
 brighton_oa_points <- st_centroid(brighton_oa)
@@ -293,7 +293,7 @@ Accessibility Analysis
 
 Next we need to get all of the roads in Brighton from Open Street Map
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 data_path = "data/"
 # Check what files we have
 list.files(data_path)
@@ -349,12 +349,12 @@ tm_shape(brighton_roads) +
 
 We can use the R5R package - https://ipeagit.github.io/r5r/ - to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by both walking and bus.
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Create the routable network by indicating the path where OSM, GTFS and possible DEM data are stored
 r5r_core = setup_r5(data_path = data_path)
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 
 #Fix the school and school data so r5 can handle it
 #schools first
@@ -391,7 +391,7 @@ summary(brighton_oa_points_r5)
 ```
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 #visualise the spatial data
 brighton_outline <- st_union(brighton_oa) %>% st_transform(4326)
 #summary(brighton_oa)
@@ -408,7 +408,7 @@ brighton_h3_centroids <- st_centroid(brighton_h3)
 
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 #generate a fine-grained spatial hex grid for Brighton
 brighton_h3_centroids <- mutate(brighton_h3_centroids, id = row_number())
 brighton_h3 <- mutate(brighton_h3, id = row_number())
@@ -433,7 +433,7 @@ ttm_brighton_h3 = travel_time_matrix(r5r_core = r5r_core,
 
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 #Now join travel time matrix back to H3 cells
 
 # Find out the travel time to closest school
@@ -450,7 +450,7 @@ geo_hex = inner_join(brighton_h3, closest, by="id")
 
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 tm_shape(geo) + 
   tm_symbols(col="time", size=0.05, border.lwd=0, style="pretty", n=10, palette="RdYlBu", alpha = 0.3) + 
   tm_layout(legend.title.size = 1.5) +
@@ -462,7 +462,7 @@ tm_shape(brighton_outline) +
   
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 # Set parameters
 mode = c("TRANSIT")
 max_walk_time = 90 # minutes
@@ -502,6 +502,9 @@ tm_shape(brighton_outline) +
   tm_polygons(alpha = 0) +
   tm_layout(title = "Bus Transit -Time (Minutes) to Secondary Schools",legend.position = c("left", "bottom"))
 ```
+
+
+
 
 ```{r}
 r5r::stop_r5(r5r_core)

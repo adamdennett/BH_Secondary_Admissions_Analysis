@@ -46,7 +46,7 @@
     "href": "BH_Sec_Sch_Analysis.html#section",
     "title": "Brighton and Hove Secondary School Admissions Proposal Analysis",
     "section": "",
-    "text": "The R5R package - https://ipeagit.github.io/r5r/ - can be used to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by car, foot and bus.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n   Group.1                x        \n Length:41171       Min.   : 0.00  \n Class :character   1st Qu.:23.00  \n Mode  :character   Median :36.00  \n                    Mean   :39.65  \n                    3rd Qu.:54.00  \n                    Max.   :90.00"
+    "text": "The R5R package - https://ipeagit.github.io/r5r/ - can be used to calculate the travel times between all of the Output Areas and Schools in Brighton and Hove by car, foot and bus."
   },
   {
     "objectID": "BH_Sec_Sch_Analysis.html#walking-travel-times-to-secondary-schools-in-brighton",
@@ -60,7 +60,7 @@
     "href": "BH_Sec_Sch_Analysis.html#accessibility-analysis",
     "title": "Brighton and Hove Secondary School Admissions Proposal Analysis",
     "section": "Accessibility Analysis",
-    "text": "Accessibility Analysis\nTo carry out an accessibility analysis, information on the full road network in Brighton and Hove is required. This can be obtained from Open Street Map\n\n\n[1] \"21\"\n\n\nReading layer `oa_brighton' from data source \n  `E:\\BH_Secondary_Admissions_Analysis\\data\\oa_brighton.geojson' \n  using driver `GeoJSON'\nSimple feature collection with 936 features and 10 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 523598.1 ymin: 101780.1 xmax: 539862.4 ymax: 111919.1\nProjected CRS: OSGB36 / British National Grid\n\n\n$url\n[1] \"https://download.geofabrik.de/europe/united-kingdom/england/east-sussex-latest.osm.pbf\"\n\n$file_size\n[1] 1.5e+07\n\n\n [1] \"osm_id\"     \"name\"       \"highway\"    \"waterway\"   \"aerialway\" \n [6] \"barrier\"    \"man_made\"   \"z_order\"    \"other_tags\" \"geometry\"  \n\n\n[1] \"sf\"         \"data.frame\""
+    "text": "Accessibility Analysis\nTo carry out an accessibility analysis, information on the full road network in Brighton and Hove is required. This can be obtained from Open Street Map\n\n\n[1] \"21\"\n\n\nReading layer `oa_brighton' from data source \n  `E:\\BH_Secondary_Admissions_Analysis\\data\\oa_brighton.geojson' \n  using driver `GeoJSON'\nSimple feature collection with 936 features and 10 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: 523598.1 ymin: 101780.1 xmax: 539862.4 ymax: 111919.1\nProjected CRS: OSGB36 / British National Grid"
   },
   {
     "objectID": "docs/BH_sec_Sch_analysis.html",

@@ -32,7 +32,7 @@ editor: visual
 
 -   My own preliminary analysis detailed below suggests:
 
-    -   Current proposals (under options 1 and 3 in particular) to reduce intakes in particular schools ignores different levels of demand (actual pupil numbers in current catchments) in different parts of the city, potentially leading to the cutting of places in schools in catchments where demand will remain high and the retention of overly large intake sizes in schools in the city where demographic demand is likely to remain low.
+    -   Current proposals (under options A and C in particular) to reduce intakes in particular schools ignores different levels of demand (actual pupil numbers in current catchments) in different parts of the city, potentially leading to the cutting of places in schools in catchments where demand will remain high and the retention of overly large intake sizes in schools in the city where demographic demand is likely to remain low.
 
     -   Proposals under Option B would lead to excessive numbers of children needed to attend schools a long way from their homes, impacting their well-being and contributing unjustifiably to increased volumes of traffic across the city where many will choose to drive, adding to the costs of Brighton Council where free transport (bus) options will need to be provided, and reducing the capacity on the bus network at key times of day as pupils will need to use buses to get to and from school.
 
@@ -314,15 +314,15 @@ library(osmextract)
 
 brighton_oa <- st_read(here("data","oa_brighton.geojson"))
 
-oe_match("East Sussex")
+#oe_match("East Sussex")
 roads_w_sussex = oe_get(c("West Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
 roads_e_sussex = oe_get(c("East Sussex"), stringsAsFactors = FALSE, quiet = TRUE)
-names(roads_w_sussex)
+#names(roads_w_sussex)
 #summary(roads_w_sussex)
 
 ht = c("motorway", "trunk", "primary", "secondary", "tertiary", "residential", "unclassified")
 osm_w_sussex_maj_roads = roads_w_sussex[roads_w_sussex$highway %in% ht, ]
-class(osm_w_sussex_maj_roads)
+#class(osm_w_sussex_maj_roads)
 osm_e_sussex_maj_roads = roads_e_sussex[roads_e_sussex$highway %in% ht, ]
 
 osm_sussex_maj_roads <- rbind(osm_w_sussex_maj_roads, osm_e_sussex_maj_roads) %>% st_transform(27700)
@@ -440,7 +440,7 @@ ttm_brighton_h3 = travel_time_matrix(r5r_core = r5r_core,
 # Find out the travel time to closest school
 closest = aggregate(ttm_brighton_h3$travel_time_p50, by=list(ttm_brighton_h3$to_id), FUN=min, na.rm=TRUE)
 
-summary(closest)
+#summary(closest)
 closest <- rename(closest, id = Group.1) 
 closest <- rename(closest, time = x)
 
@@ -522,7 +522,7 @@ tm_shape(bh_sec_sch1) +
   tm_dots(col = "black", border.lwd=0) + 
 tm_shape(bh_catchments) +
   tm_polygons(alpha = 0) +
-  tm_layout(title = "Car Travel Time",legend.position = c("left", "bottom"))
+  tm_layout(title = "Bus Travel Time (incoporating waiting)",legend.position = c("left", "bottom"))
 ```
 
 ```{r, warning=FALSE, message=FALSE, echo=FALSE}

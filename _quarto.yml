@@ -21,6 +21,7 @@ website:
             url:  https://github.com/adamdennett/BH_Secondary_Admissions_Analysis/issues
   repo-url: https://github.com/adamdennett/BH_Secondary_Admissions_Analysis
   repo-actions: [source, issue]
+  google-analytics: "G-775DPGFRPL"
 
 format:
   html:

@@ -24,7 +24,7 @@ editor: visual
 
     -   No information about the environmental (traffic and travel) and pupil well-being implications of the proposals in Option B, which would be highly likely to result in significant numbers of children having to travel long distances across the city to attend schools.
 
-    -   No sound justification for a privileging of the desire to smooth the distributions of pupils in receipt of Free School Meals (FSM) across schools in the city, over and above any other reasonable considerations which will impact the well-being of all children. A balanced assessment would need to consider the physical and mental benefits of being able to walk to school, the social and cultural benefits of attending school near where friends, family and local community activities are located. There is no acknowledgement of why schools in cities like London, many of whom have far higher FSM levels than any school in Brighton, are able to achieve better pupil outcomes.
+    -   No sound justification for a privileging of the desire to smooth the distributions of pupils in receipt of Free School Meals (FSM) across schools in the city, over and above any other reasonable considerations which will impact the well-being of all children. A balanced assessment would also need to consider the physical and mental benefits of being able to walk to school, the social and cultural benefits of attending school near where friends, family and local community activities are located, as well as counter-evidence (such as <https://doi.org/10.1177/0038040710383519>) which suggests that artificially engineering social-mix may harm educational outcomes. Furthermore, there is no acknowledgement of why schools in cities like London, many of whom have far higher FSM levels than any school in Brighton, are able to achieve better pupil outcomes.
 
     -   No analysis of why children in receipt of Free School Meals under the current system who *already* have priority over almost any other category of child should they wish to attend a school in the city outside of their catchment area, apparently don't do so to the level desired by they council. Why is it that more of these children do not *already* travel across the city to their preferred school? The reasons are likely to be informative and will be necessary to contextualise the proposals produced.
 
@@ -122,7 +122,7 @@ Under the UK national School Admissions Code, 2007, distance between home and sc
 
 Brighton’s authorities have long cited the issue of fair access to popular secondary schools (Eastwood & Turvey, 2008) and consequently, in 2008, introduced a lottery system, alongside new catchment areas to its secondary school admissions process (distance was retained as a criteria for primary schools).
 
-Places at schools are decided using the following published criteria: https://www.brighton-hove.gov.uk/schools-and-learning/apply-school/how-community-secondary-school-places-will-be-decided-2025-2026
+Places at schools are decided using the following published criteria: <https://www.brighton-hove.gov.uk/schools-and-learning/apply-school/how-community-secondary-school-places-will-be-decided-2025-2026>
 
 If a school as more applicants than places available, the following rules will be used to decide which pupils get offered a place FIRST.
 
@@ -148,11 +148,11 @@ In the supplied [PowerPoint file](https://yourvoice.brighton-hove.gov.uk/uploads
 
 ### Issues with the evidence-base for these objectives
 
-While these objectives are laudible in terms of their aspirations towards equality and maintaining provision across the city, the lack of spatial literacy in these proposals and the skating over of the demand dimension (where pupils actually live in the City) is very concerning and needs addressing.
+While these objectives are on the surface, laudable, in terms of their aspirations towards equality and maintaining provision across the city, the lack of spatial literacy in these proposals and the skating over of the demand dimension (where pupils actually live in the City) is very concerning and needs addressing.
 
 The council has not provided any spatial analysis of *where* the current and future secondary school pupil populations are located. This is a major oversight, as cutting places from schools in areas of the city where demand is higher relative to the availability of places will lead to, potentially, places being cut from the wrong schools and excessive and necessary travel for students unable to attend their local schools and forced to travel across the city to where places do exist.
 
-My preliminary analysis below suggests that the way Pupil Admission Numbers (PANs) are proposed to be cut from schools across the city, ignores WHERE students are located, potentially storing up problems in the future.
+My preliminary analysis below suggests that the way Pupil Admission Numbers (PANs) are proposed to be cut from schools across the city, ignores WHERE students are located, potentially storing up problems in the future. The only reasoning I can see for the PAN proposals are to artificially boost student numbers in schools with lower demand - and coincidentally, presently poor Ofsted ratings in order to continue their viability. Evidence is citied that better social-mix is associated with better educational outcomes, which might be true where that mix occurs organically, but there is no evidence that I could find in the literature that artificially enforcing mix (by bussing students from more affluent parts of the city to schools in less affluent parts or *vice versa*) will suddenly improve the attainment. Indeed there is some evidence - <https://doi.org/10.1177/0038040710383519> - that this kind of social engineering can make educational outcomes even worse for low socio-economic status students.
 
 # Analysis
 
@@ -284,6 +284,10 @@ Everything below is indicative - Brighton and Hove Council can do this calculati
 6.  Nonsensically, catchments with low demand ratios already, (Patcham, Portslade, Brighton Aldridge) have **NO CHANGE** to their PANs in 2026.
 7.  Given current demand, it would make more sense to, at the very least, keep PANs steady for areas with already high demand and reduce PANs for areas with lower demand.
 8.  The current proposals to reduce PANs very much suggest a social engineering motivation (forcing high-demand catchments to reduce intake which would inevitably force students without places to seek education in other catchments, not over subscribed.
+
+Addendum -
+
+Since carrying out the above analysis, my attention has been drawn to the published Year-7 admissions statistics on the Council website - <https://www.brighton-hove.gov.uk/allocation-factsheet-year-7-places-september-2024> - these numbers would appear to back-up my observations on demand within the city. There is very little evidence of demand for places at Brighton Aldridge and Longhill High School - the former with no proposed changes to a PAN which is already well above demand. Schools with very high demand (Dorothy Stringer and Varndean in particular) are facing cuts where current demand is so high that future demand is unlikely to dip below the PAN allowed.
 
 # Option B and Travel Implications
 

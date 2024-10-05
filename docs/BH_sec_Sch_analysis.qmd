@@ -111,7 +111,6 @@ tm_shape(bh_catchments) +
 tm_shape(brighton_sec_schools) +
   tm_dots(col = "establishment_name", size = 0.1) +
   tm_layout(title = "Brighton and Hove Secondary Schools", legend.position = c("left", "bottom"))
-
 ```
 
 ### History and Background to Secondary School Admissions in Brighton
@@ -189,7 +188,9 @@ st_write(brighton_lsoa,here("data","BrightonLSOASchoolChildren.geojson"), append
 
 tmap_mode("view")
 tm_shape(brighton_lsoa) +
-  tm_polygons("lq_5_9", alpha = 0.5, style = "jenks", palette = "RdBu", title = "Location Quotient 5-9 year olds")
+  tm_polygons("lq_5_9", alpha = 0.5, style = "jenks", palette = "RdBu", title = "Location Quotient 5-9 year olds") +
+tm_shape(brighton_sec_schools) +
+  tm_dots(col = "black", border.lwd=0)
 ```
 
 The map above shows the location quotient of 5-9 year olds in Brighton and Hove. Location Quotient is a measure of the concentration of young people in each LSOA relative to the city average. It's a ratio, so a value of 1 means the same as the city average, above 1 means more than average, below 1 means less than average.

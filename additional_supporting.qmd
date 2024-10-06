@@ -1,0 +1,38 @@
+---
+title: "Additional Supporting Data"
+author: "Adam Dennett"
+---
+
+On this page I will include some additional supporting data visualisations. The council have pu
+
+Firstly some visualisation of the allocation of Year 7 places across the city
+
+Data taken from here - <https://www.brighton-hove.gov.uk/allocation-factsheet-year-7-places-september-2024>
+
+```{r}
+library(tidyverse)
+library(plotly)
+library(tmap)
+library(here)
+```
+
+```{r}
+admissions <- read_csv(here("data", "Yr7_admissions.csv"))
+
+```
+
+```{r}
+
+fig <- plot_ly(admissions, x = ~pan, y = ~School, type = 'bar') %>%
+  layout(
+    xaxis = list(
+      title = "PAN 2024",
+      categoryorder = "array",
+      categoryarray = ~pan
+    )
+  )
+
+# Display the plot
+fig
+
+```

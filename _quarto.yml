@@ -23,6 +23,8 @@ website:
   repo-actions: [source, issue]
   google-analytics: "G-775DPGFRPL"
   open-graph: true
+  twitter-card: true
+   
 
 format:
   html:

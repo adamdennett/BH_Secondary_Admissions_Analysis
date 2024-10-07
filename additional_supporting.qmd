@@ -3,36 +3,61 @@ title: "Additional Supporting Data"
 author: "Adam Dennett"
 ---
 
-On this page I will include some additional supporting data visualisations. The council have pu
+On this page I will include some additional supporting data visualisations.
 
 Firstly some visualisation of the allocation of Year 7 places across the city
 
 Data taken from here - <https://www.brighton-hove.gov.uk/allocation-factsheet-year-7-places-september-2024>
 
-```{r}
+**Not much to see here yet, but I will get there with some more interesting bits** - including some spatial interaction / gravity modelling to show how much heavy-lifting the present catchments may already be doing on the equity side of things - hope to get to it by the end of the week.
+
+```{r, echo=F, message=F, warning=F}
 library(tidyverse)
 library(plotly)
 library(tmap)
 library(here)
-```
-
-```{r}
-admissions <- read_csv(here("data", "Yr7_admissions.csv"))
+library(ggplot2)
+library(janitor)
 
 ```
 
-```{r}
+```{r, echo=F, message=F, warning=F}
 
-fig <- plot_ly(admissions, x = ~pan, y = ~School, type = 'bar') %>%
-  layout(
-    xaxis = list(
-      title = "PAN 2024",
-      categoryorder = "array",
-      categoryarray = ~pan
-    )
-  )
+mpg <- mpg
 
-# Display the plot
-fig
+admissions <- read_csv(here("data", "Yr7_admissions.csv")) %>% clean_names()
 
+admissions_long <- admissions %>% 
+  pivot_longer(pan:first_pref_offered, names_to = "stat_type", values_to = "stat")
+
+```
+
+```{r, echo=F, message=F, warning=F}
+
+library(ggplot2)
+
+library(ggplot2)
+
+ggplot(admissions, aes(x = reorder(school, -as.numeric(factor(school))), y = pan)) +
+  geom_bar(stat = "identity") +
+  xlab("School") +
+  ylab("PAN 2024") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_minimal() +
+  coord_flip() +
+  geom_vline(xintercept = mean(admissions$pan), color = "red", size = 1)
+
+```
+
+```{r, echo=F, message=F, warning=F}
+admissions_long <- admissions %>% 
+  select(school:first_pref_offered) %>% 
+  pivot_longer(pan:first_pref_offered, names_to = "stat_type", values_to = "stat")
+
+ggplot(admissions_long, aes(x = reorder(school, -as.numeric(factor(school))), y = stat)) +
+  geom_bar(aes(fill = stat_type), stat = "identity", position = "dodge2") +
+  xlab("School") +
+  ylab("Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  coord_flip()
 ```

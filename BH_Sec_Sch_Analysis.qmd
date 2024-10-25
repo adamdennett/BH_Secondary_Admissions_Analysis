@@ -10,6 +10,10 @@ editor: visual
 
 *All data used in the analysis can be downloaded from [here](https://www.dropbox.com/s/iovcingsa53ac9m/data.zip?dl=0)*
 
+*Additional Analysis for week 2 of the consultation can be found [here](https://adamdennett.github.io/BH_Schools_2/schools_wk2.html)*
+
+*And for week 3 [here](https://adamdennett.github.io/BH_Schools_2/schools_wk3.html)*
+
 *The analysis below goes into quite a lot of detail, but my main observations are summarised in the executive summary below if you don't want to read to the end.*
 
 *Please email me on the above address if you have any questions and queries.*
@@ -19,6 +23,7 @@ editor: visual
 Since putting this evidence together, a few people have asked me if I have a child that will be affected by the proposed changes. I do. We live very close to both Dorothy Stinger and Vardean Schools and it is absolutely the case that I would consider a few minutes walk to those schools a preferable option for her. As such, be mindful of the risk of bias in what I present and make up your own minds from the evidence. But I would hope that what comes below is as objective as it can be and the questions posed constructive for the inevitable debate such proposals will cause. I am a resident of Brighton and Hove and have a professional interest in how we can make better use of data and evidence to inform public policy.
 
 I will also be very happy to work with the Council to help produce a more comprehensive analysis relative to the proposals presented and should they be willing to share their data with me. Please just get in contact via the email address above.
+
 
 # Executive Summary
 

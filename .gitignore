@@ -7,3 +7,5 @@
 data/
 BrightonLSOASchoolChildren.geojson
 /.quarto/
+# Claude Code worktrees (never track these)
+.claude/
